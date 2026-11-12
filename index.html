@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northern Travels — Voice Call Agent</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:20px}
+  .card{max-width:560px;margin:0 auto;background:#1e293b;border-radius:16px;padding:20px}
+  h1{font-size:20px;margin:0 0 4px} .sub{color:#94a3b8;font-size:13px;margin-bottom:16px}
+  button{background:#22c55e;color:#052e16;border:0;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer;margin:4px 4px 4px 0}
+  button.red{background:#ef4444;color:#fff} button.blue{background:#38bdf8;color:#082f49}
+  #log{background:#0b1220;border-radius:10px;padding:12px;min-height:180px;font-size:14px;line-height:1.5;white-space:pre-wrap}
+  .me{color:#7dd3fc}.ag{color:#86efac}
+  input{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #334155;background:#0b1220;color:#e2e8f0;margin-top:10px}
+  .note{font-size:12px;color:#94a3b8;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📞 Northern Travels — Voice Call Agent</h1>
+  <div class="sub">Incoming + outgoing voice demo. Free: uses Chrome's built-in mic &amp; voice. Open in Chrome.</div>
+  <button id="incoming">▶ Answer Incoming Call</button>
+  <button id="outgoing" class="blue">▶ Make Outgoing Call (follow-up)</button>
+  <button id="mic" class="blue">🎤 Talk</button>
+  <button id="stop" class="red">⏹ End Call</button>
+  <div id="log"></div>
+  <input id="type" placeholder="No mic? Type here and press Enter — e.g. Hunza price / book Hunza">
+  <div class="note">Leads captured on a call are saved in this browser (localStorage: nt_leads) — name, phone, tour. Owner: 0328 6770527.</div>
+</div>
+<script src="brain.js"></script>
+<script>
+const state = { pendingLead: null };
+const logEl = document.getElementById('log');
+function log(who, text){ logEl.innerHTML += `<div class="${who==='You'?'me':'ag'}">${who}: ${text}</div>`; logEl.scrollTop = 1e6; }
+function speak(text){
+  log('Agent', text);
+  try{ const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 1.0; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+}
+function handle(text){
+  log('You', text);
+  const r = agentReply(text, state);
+  if (r.lead){ const leads = JSON.parse(localStorage.getItem('nt_leads')||'[]'); leads.push(r.lead); localStorage.setItem('nt_leads', JSON.stringify(leads)); log('Agent', '✅ Lead saved: ' + JSON.stringify(r.lead)); }
+  speak(r.text);
+}
+document.getElementById('incoming').onclick = () => speak(INCOMING_GREETING);
+document.getElementById('outgoing').onclick = () => { const leads = JSON.parse(localStorage.getItem('nt_leads')||'[]'); const lead = leads[leads.length-1] || { name:'Zohaib', service:'Hunza 5-Day Tour' }; speak(OUTGOING_PITCH(lead)); };
+document.getElementById('stop').onclick = () => { speechSynthesis.cancel(); log('Agent','Call ended. Shukriya!'); };
+document.getElementById('type').addEventListener('keydown', e => { if(e.key==='Enter'){ handle(e.target.value); e.target.value=''; }});
+const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+document.getElementById('mic').onclick = () => { if(!Rec){ alert('Mic speech needs Chrome. Type in the box instead.'); return; } const r = new Rec(); r.lang = 'en-US'; r.interimResults = false; r.onresult = e => handle(e.results[0][0].transcript); r.onerror = () => alert('Mic error — check permission, or type instead.'); r.start(); };
+log('Agent','Ready. Press “Answer Incoming Call”, then Talk or type.');
+</script>
+</body>
+</html>
