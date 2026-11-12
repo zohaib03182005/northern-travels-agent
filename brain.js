@@ -26,8 +26,12 @@ const SERVICES = [
 const det = (s, lang) => (s.details[lang] || s.details.en);
 
 const T = {
-en: { hello: `Assalamualaikum! Welcome to Northern Travels. Tours to Hunza, Skardu, Swat and Naran. Ask me tour prices, or say book, to reserve a seat.`,
-  priceOne: s => `${s.name}: ${s.price}. ${det(s,'en')} Say book ${s.key}, to reserve.`,
+en: { hello: `Assalamualaikum! This is Arslan, from Northern Travels. Khush amdeed, janab! We have lovely tours to Hunza, Skardu and Swat. Tell me, which tour's price shall I share — or shall I book your seat right away?`,
+  howru: "Alhamdulillah, I am very well, janab. You tell me — how are you? Planning a trip up north?",
+  thanks: "Most welcome, janab! It is my pleasure. Anything else I can do for you?",
+  bye: "Allah Hafiz, janab! Take care. Jab bhi trip ka mood bane, just call me — I am right here.",
+  myname: "My name is Arslan, janab — your own travel wala from Northern Travels, Lahore. I will sort your whole trip, fikar not!",
+  priceOne: s => `Yes janab! ${s.name} — only ${s.price}. ${det(s,'en')} If you like it, just say 'book ${s.key}' and your seat is pakka confirmed.`,
   priceList: () => "Our tours: " + SERVICES.map(s => `${s.name}, ${s.price}`).join(". ") + ". Which tour do you like?",
   book: n => `Great choice! Let us book ${n}. Please say your name and phone number together.`,
   askPhone: "Please share your phone number, for example 0321-1234567, so our team can confirm.",
@@ -40,8 +44,12 @@ en: { hello: `Assalamualaikum! Welcome to Northern Travels. Tours to Hunza, Skar
   discount: "Groups of 6 or more get 8 percent off. Students with a valid ID card get 5 percent off on Swat tours.",
   payment: "A small advance via JazzCash or EasyPaisa confirms your seat. The rest is paid on departure day.",
   hotel: "All prices include clean family hotels on double sharing. A single room is available for an extra charge." },
-roman: { hello: `Assalamualaikum! Northern Travels mein khush amdeed. Hunza, Skardu, Swat aur Naran ke tours. Prices poochain, ya 'book' keh kar seat reserve karein.`,
-  priceOne: s => `${s.name}: ${s.price}. ${det(s,'en')} Reserve karne ke liye 'book ${s.key}' kahein.`,
+roman: { hello: `Assalamualaikum janab! Mein Arslan bol raha hoon, Northern Travels se. Khush amdeed! Hunza, Skardu, Swat ke zabardast tours hain hamare paas. Batayein janab, kis tour ki price bataun — ya seedha aap ki seat book kar dun?`,
+  howru: "Alhamdulillah janab, mein bilkul theek hoon. Aap sunayein, aap kaise hain? Kahin north ki sair ka plan to nahi ban raha?",
+  thanks: "Jee janab, ye to mera farz hai! Koi aur khidmat ho to bas hukm karein.",
+  bye: "Allah Hafiz janab! Apna khayal rakhiye ga. Jab bhi trip ka mood bane, bas Arslan ko yaad kar lena.",
+  myname: "Jee janab, mera naam Arslan hai — Northern Travels Lahore se aap ka apna travel wala banda. Poora trip mein set kar dunga, aap bas bag pack karein!",
+  priceOne: s => `Jee janab! ${s.name} — sirf ${s.price}. ${det(s,'en')} Pasand aaye to 'book ${s.key}' keh dein, seat aap ki pakki.`,
   priceList: () => "Hamare tours: " + SERVICES.map(s => `${s.name}, ${s.price}`).join(". ") + ". Konsa tour pasand hai?",
   book: n => `Great choice! ${n} book karte hain. Apna naam aur phone number ek saath bol dein.`,
   askPhone: "Please apna phone number bol dein, for example 0321-1234567, taake hamari team confirm kar sake.",
@@ -54,8 +62,12 @@ roman: { hello: `Assalamualaikum! Northern Travels mein khush amdeed. Hunza, Ska
   discount: "6 ya zyada afrad ke group par 8% riyayat. Talib ilmon ko sahi ID card par Swat tours mein 5% riyayat.",
   payment: "Seat confirm karne ke liye JazzCash/EasyPaisa se chhota sa advance liya jata hai. Baqi raqam rawanagi ke din di jati hai.",
   hotel: "Tamam packages mein saaf family hotel (double sharing) shamil hain. Single room izafi charge par mil sakta hai." },
-ur: { hello: `السلام علیکم! ناردرن ٹریولز میں خوش آمدید — ہنزہ، سکردو، سوات اور ناران کے ٹورز۔ ٹور کی قیمت پوچھیں یا 'بک' کہہ کر سیٹ ریزرو کریں۔`,
-  priceOne: s => `${s.name}: ${s.price}۔ ${det(s,'ur')} ریزرو کرنے کے لیے 'بک' کہیں۔`,
+ur: { hello: `السلام علیکم جناب! میں ارسلان بول رہا ہوں، ناردرن ٹریولز سے۔ خوش آمدید! ہنزہ، سکردو، سوات کے زبردست ٹورز ہیں ہمارے پاس۔ بتائیں جناب، کس ٹور کی قیمت بتاؤں — یا سیدھا آپ کی سیٹ بک کر دوں؟`,
+  howru: "الحمدللہ جناب، میں بالکل ٹھیک ہوں۔ آپ سنائیں، آپ کیسے ہیں؟ کہیں شمال کی سیر کا پلان تو نہیں بن رہا؟",
+  thanks: "جی جناب، یہ تو میرا فرض ہے! کوئی اور خدمت ہو تو بس حکم کریں۔",
+  bye: "اللہ حافظ جناب! اپنا خیال رکھیے گا۔ جب بھی ٹرپ کا موڈ بنے، بس ارسلان کو یاد کر لینا۔",
+  myname: "جی جناب، میرا نام ارسلان ہے — ناردرن ٹریولز لاہور سے آپ کا اپنا ٹریول والا بندہ۔ پورا ٹرپ میں سیٹ کر دوں گا، آپ بس بیگ پیک کریں!",
+  priceOne: s => `جی جناب! ${s.name} — صرف ${s.price}۔ ${det(s,'ur')} پسند آئے تو 'بک' کہہ دیں، سیٹ آپ کی پکی۔`,
   priceList: () => "ہمارے ٹورز: " + SERVICES.map(s => `${s.name}، ${s.price}`).join("۔ ") + "۔ کونسا ٹور پسند ہے؟",
   book: n => `بہت خوب! ${n} بک کرتے ہیں۔ اپنا نام اور فون نمبر ایک ساتھ بتائیں۔`,
   askPhone: "براہ کرم اپنا فون نمبر بتائیں، مثال 0321-1234567، تاکہ ہماری ٹیم تصدیق کر سکے۔",
@@ -68,8 +80,12 @@ ur: { hello: `السلام علیکم! ناردرن ٹریولز میں خوش �
   discount: "6 یا زیادہ افراد کے گروپ پر 8 فیصد رعایت۔ طلبہ کو درست شناختی کارڈ پر سوات ٹورز میں 5 فیصد رعایت۔",
   payment: "سیٹ کی تصدیق کے لیے جاز کیش/ایزی پیسہ سے چھوٹا سا ایڈوانس لیا جاتا ہے۔ باقی رقم روانگی کے دن دی جاتی ہے۔",
   hotel: "تمام پیکجز میں صاف ستھرے فیملی ہوٹل (ڈبل شیئرنگ) شامل ہیں۔ سنگل روم اضافی چارج پر مل سکتا ہے۔" },
-hi: { hello: `नमस्ते! नॉर्दर्न ट्रैवल्स में आपका स्वागत है — हुनज़ा, स्कर्दू, स्वात और नारान के टूर। टूर की कीमत पूछें या 'बुक' कहकर सीट रिज़र्व करें।`,
-  priceOne: s => `${s.name}: ${s.price}। ${det(s,'hi')} रिज़र्व करने के लिए 'बुक' कहें।`,
+hi: { hello: `नमस्ते जनाब! मैं अर्सलान बोल रहा हूँ, नॉर्दर्न ट्रैवल्स से। खुश आमदीद! हुनज़ा, स्कर्दू, स्वात के ज़बरदस्त टूर हैं हमारे पास। बताइए जनाब, किस टूर की कीमत बताऊँ — या सीधा आपकी सीट बुक कर दूँ?`,
+  howru: "अल्हम्दुलिल्लाह जनाब, मैं बिल्कुल ठीक हूँ। आप सुनाइए, आप कैसे हैं? कहीं उत्तर की सैर का प्लान तो नहीं बन रहा?",
+  thanks: "जी जनाब, यह तो मेरा फ़र्ज़ है! कोई और सेवा हो तो बस हुक्म करें।",
+  bye: "खुदा हाफ़िज़ जनाब! अपना ख्याल रखिएगा। जब भी ट्रिप का मूड बने, बस अर्सलान को याद कर लेना।",
+  myname: "जी जनाब, मेरा नाम अर्सलान है — नॉर्दर्न ट्रैवल्स लाहौर से आपका अपना ट्रैवल वाला बंदा। पूरा ट्रिप मैं सेट कर दूँगा, आप बस बैग पैक करें!",
+  priceOne: s => `जी जनाब! ${s.name} — सिर्फ़ ${s.price}। ${det(s,'hi')} पसंद आए तो 'बुक' कह दें, सीट आपकी पक्की।`,
   priceList: () => "हमारे टूर: " + SERVICES.map(s => `${s.name}, ${s.price}`).join(". ") + ". कौनसा टूर पसंद है?",
   book: n => `बहुत बढ़िया! ${n} बुक करते हैं। अपना नाम और फोन नंबर एक साथ बताएं।`,
   askPhone: "कृपया अपना फोन नंबर बताएं, उदाहरण 0321-1234567, ताकि हमारी टीम पुष्टि कर सके।",
@@ -82,8 +98,12 @@ hi: { hello: `नमस्ते! नॉर्दर्न ट्रैवल्
   discount: "6 या अधिक लोगों के ग्रुप पर 8 प्रतिशत छूट। छात्रों को वैध आईडी कार्ड पर स्वात टूर में 5 प्रतिशत छूट।",
   payment: "सीट की पुष्टि के लिए जैज़कैश/ईज़ीपैसा से छोटा सा एडवांस लिया जाता है। बाकी रकम रवानगी के दिन दी जाती है।",
   hotel: "सभी पैकेज में साफ़ परिवार होटल (डबल शेयरिंग) शामिल हैं। सिंगल रूम अतिरिक्त शुल्क पर मिल सकता है।" },
-pa: { hello: `Sat Sri Akal! Northern Travels vich tuhada swagat hai — Hunza, Skardu, Swat te Naran de tour. Tour di qeemat puchho, ya 'book' keh ke seat reserve karo.`,
-  priceOne: s => `${s.name}: ${s.price}. ${det(s,'en')} Reserve karan layi 'book' kaho.`,
+pa: { hello: `Sat Sri Akal janab! Main Arslan bol reha haan, Northern Travels to. Jee aaya nu! Hunza, Skardu, Swat de zabardast tour ne saade kol. Daso janab, kehre tour di qeemat dasaan — ya seedha tuhadi seat book kar daan?`,
+  howru: "Alhamdulillah janab, main bilkul theek haan. Tusi sunao, tusi kidda ho? Kitte north di sair da plan ta nahi ban reha?",
+  thanks: "Jee janab, eh ta mera farz hai! Koi hor sewa hove ta bas hukm karo.",
+  bye: "Allah Hafiz janab! Apna khayal rakhna. Jadon vi trip da mood bane, bas Arslan nu yaad kar lena.",
+  myname: "Jee janab, mera naam Arslan hai — Northern Travels Lahore to tuhada apna travel wala banda. Poora trip main set kar daanga, tusi bas bag pack karo!",
+  priceOne: s => `Haan ji janab! ${s.name} — sirf ${s.price}. ${det(s,'en')} Pasand aave ta 'book' keh deo, seat tuhadi pakki.`,
   priceList: () => "Sade tour: " + SERVICES.map(s => `${s.name}, ${s.price}`).join(". ") + ". Kehra tour pasand hai?",
   book: n => `Bohat changa! ${n} book karde aan. Apna naam te phone number ikko saath daso.`,
   askPhone: "Meharbani karke apna phone number daso, maslan 0321-1234567, taake sadi team tasdeeq kar sake.",
@@ -96,8 +116,12 @@ pa: { hello: `Sat Sri Akal! Northern Travels vich tuhada swagat hai — Hunza, S
   discount: "6 ya zyada bandeya de group te 8% chhoot. Students nu sahi ID card te Swat tour vich 5% chhoot.",
   payment: "Seat confirm karan layi JazzCash/EasyPaisa to chhota jeya advance liya janda hai. Baqi raqam rawanagi wale din ditti jandi hai.",
   hotel: "Saare packages vich saaf family hotel (double sharing) shamil ne. Single room wadhi charge te mil sakda hai." },
-sd: { hello: `Assalamualaikum! Northern Travels mein tawhanjo bhalikar — Hunza, Skardu, Swat aein Naran ja tour. Tour ji qeemat puchho, ya 'book' chae seat reserve kayo.`,
-  priceOne: s => `${s.name}: ${s.price}. ${det(s,'en')} Reserve karan lai 'book' chao.`,
+sd: { hello: `Assalamualaikum janab! Aanein Arslan galhae rahiyo aahiyan, Northern Travels khan. Bhalikar! Hunza, Skardu, Swat ja zabardast tour aahin asaan wat. Budhayo janab, kehre tour ji qeemat budhayan — ya seedho tawhanji seat book kare chhadyan?`,
+  howru: "Alhamdulillah janab, aanein bilkul theek aahiyan. Tawhan sunayo, tawhan keean aahiyo? Kite north ji sair jo plan ta na piyu bane?",
+  thanks: "Jee janab, he ta muhinjo farz ahe! Kaa byee khidmat huje ta bas hukm kayo.",
+  bye: "Allah Hafiz janab! Panhinjo khayal rakhjo. Jedhen bhi trip jo mood bane, bas Arslan khe yaad kare chhadjo.",
+  myname: "Jee janab, muhinjo naalo Arslan ahe — Northern Travels Lahore khan tawhanjo panhinjo travel waro mando. Pooro trip aanein set kare deendus, tawhan bas bag pack kayo!",
+  priceOne: s => `Bilkul janab! ${s.name} — sirf ${s.price}. ${det(s,'en')} Pasand aache ta 'book' chao, seat tawhanji pakki.`,
   priceList: () => "Asaanja tour: " + SERVICES.map(s => `${s.name}, ${s.price}`).join(". ") + ". Kehro tour pasand ahe?",
   book: n => `Zabardast! ${n} book kayon tha. Panhinjo naalo aein phone number gad budhayo.`,
   askPhone: "Meharbani kare panhinjo phone number budhayo, masalan 0321-1234567, taake asaanji team tasdeeq kare saghe.",
@@ -110,8 +134,12 @@ sd: { hello: `Assalamualaikum! Northern Travels mein tawhanjo bhalikar — Hunza
   discount: "6 ya wadheek manhan je group te 8% riayat. Students khe sahi ID card te Swat tour mein 5% riayat.",
   payment: "Seat confirm karan lai JazzCash/EasyPaisa khan nandho advance wathando ahe. Baqi raqam rawanagi ware deenh dindi ahe.",
   hotel: "Sabhi packages mein saaf family hotel (double sharing) shamil ahen. Single room wadhi charge te mili saghe tho." },
-ps: { hello: `Pa khair raghlay! Northern Travels ta staso swagat de — Hunza, Skardu, Swat aw Naran safaruna. Da safar qeemat wapohtay, ya 'book' owayast se seat reserve kay.`,
-  priceOne: s => `${s.name}: ${s.price}. ${det(s,'en')} Reserve kawalo dapara 'book' owayast.`,
+ps: { hello: `Assalamualaikum janab! Za Arslan yem, Northern Travels na. Pa khair raghlay! Hunza, Skardu, Swat der zabardast safaruna di zamung sara. Owayast janab, da kum safar qeemat owem — ya seedha staso seat book kram?`,
+  howru: "Alhamdulillah janab, za bilkul khat yem. Taso owayast, taso sanga yast? Kala da shamal safar plan kho na joregi?",
+  thanks: "Jee janab, da kho zama farz de! Nor sa khidmat wi nu bas hukm okay.",
+  bye: "Allah Hafiz janab! Khpal khayal satay. Kala ham da safar mood jor shi, bas Arslan yaad kay.",
+  myname: "Jee janab, zama num Arslan de — Northern Travels Lahore na staso khpal safar walay saray. Tol safar ba za set kram, taso bas bag pack kay!",
+  priceOne: s => `Bilkul janab! ${s.name} — sirf ${s.price}. ${det(s,'en')} Khwakh shi nu 'book' owayast, seat staso pakka.`,
   priceList: () => "Zamung safaruna: " + SERVICES.map(s => `${s.name}, ${s.price}`).join(". ") + ". Kum safar mo khwakh de?",
   book: n => `Der kha! ${n} book kawu. Khpal num aw phone number yo zaay owayast.`,
   askPhone: "Meharbani okray khpal phone number owayast, mesal 0321-1234567, che zamung team tasdeeq okri.",
@@ -177,11 +205,15 @@ function agentReply(input, state) {
   if (["hi", "hello", "salam", "aoa", "hey", "assalamualaikum", "assalam o alaikum", "sat sri akal", "namaste", "adab"].some(g => low === g || low.startsWith(g + " ") || raw.startsWith("السلام") || raw.startsWith("नमस्ते"))) {
     return { text: L.hello, lang };
   }
-  if (low.includes("book") || low.includes("reserve") || raw.includes("بک") || low.includes("बुक")) {
+  if (low.includes("book") || low.includes("reserve") || raw.includes("بک") || raw.includes("बुक")) {
     const svc = findService(low);
     state.pendingLead = { service: svc ? svc.name : "General Tour" };
     return { text: L.book(state.pendingLead.service), lang };
   }
+  if (["your name", "tumhara naam", "aap ka naam", "apna naam", "tumhara name", "تمہارا نام", "آپ کا نام", "तुम्हारा नाम", "staso num", "tawhanjo naalo", "tuhada naam"].some(w => low.includes(w) || raw.includes(w))) return { text: L.myname, lang };
+  if (["how are you", "kaise ho", "kese ho", "kaisa hai", "kaisi ho", "کیسے ہو", "कैसे हो", "kidda", "kewen", "sanga ye", "سنگه"].some(w => low.includes(w) || raw.includes(w))) return { text: L.howru, lang };
+  if (["thank", "shukriya", "شکریہ", "धन्यवाद", "meharbani", "مہربانی", "manana", "مننه"].some(w => low.includes(w) || raw.includes(w))) return { text: L.thanks, lang };
+  if (["allah hafiz", "khuda hafiz", "bye", "الوداع", "अलविदा", "اللہ حافظ", "خدا حافظ"].some(w => low.includes(w) || raw.includes(w))) return { text: L.bye, lang };
   if (["price", "rate", "cost", "package", "tour", "trip", "qeemat", "qemat", "قیمت", "कीमत", "safar"].some(w => low.includes(w) || raw.includes(w))) {
     const svc = findService(low);
     if (svc) return { text: L.priceOne(svc), lang };
@@ -202,10 +234,10 @@ const OUTGOING_PITCH = (lead, lang) => {
   const svc = SERVICES.find(s => lead.service.toLowerCase().includes(s.key));
   const price = svc ? svc.price : "available on request";
   const by = {
-    en: `Hello ${lead.name}, I am calling from Northern Travels. You showed interest in ${lead.service}. Seats are limited - shall I confirm your booking? The price is ${price}.`,
-    ur: `السلام علیکم ${lead.name}، میں ناردرن ٹریولز سے بول رہا ہوں۔ آپ نے ${lead.service} میں دلچسپی ظاہر کی تھی۔ نشستیں محدود ہیں، کیا میں آپ کی بکنگ کنفرم کر دوں؟ قیمت ہے ${price}۔`
+    en: `Hello ${lead.name} janab, this is Arslan calling from Northern Travels. You showed interest in ${lead.service}. Seats are limited - shall I confirm your booking? The price is ${price}.`,
+    ur: `السلام علیکم ${lead.name} بھائی، میں ارسلان بول رہا ہوں ناردرن ٹریولز سے۔ آپ نے ${lead.service} میں دلچسپی ظاہر کی تھی۔ نشستیں محدود ہیں، کیا میں آپ کی بکنگ کنفرم کر دوں؟ قیمت ہے ${price}۔`
   };
-  return by[lang] || `Assalamualaikum ${lead.name}, mein Northern Travels se bol raha hoon. Aap ne ${lead.service} mein interest dikhaya tha. Seats limited hain, kya mein aap ki booking confirm kar doon? Price hai ${price}.`;
+  return by[lang] || `Assalamualaikum ${lead.name} bhai, mein Arslan bol raha hoon Northern Travels se. Aap ne ${lead.service} mein interest dikhaya tha. Seats limited hain, kya mein aap ki booking confirm kar doon? Price hai ${price}.`;
 };
 
 if (typeof module !== "undefined") module.exports = { detectLanguage, agentReply, T, SERVICES, LANG_CODES, TTS_TL, LANG_NAMES, INCOMING_GREETING, OUTGOING_PITCH };
