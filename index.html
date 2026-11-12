@@ -25,18 +25,20 @@
   <div class="sub">Natural voice · Auto language: jo bhasha aap bolenge, agent usi mein jawab dega — English, اردو, Roman Urdu, हिन्दी, ਪੰਜਾਬੀ, سنڌي, پښتو. Open in Chrome.</div>
   <div id="mode">🌐 Mode: Auto</div>
   <div id="chips"></div>
+  <div id="vchips" style="margin-top:6px"></div>
   <button id="incoming">▶ Answer Incoming Call</button>
   <button id="outgoing" class="blue">▶ Make Outgoing Call (follow-up)</button>
   <button id="mic" class="blue">🎤 Talk</button>
   <button id="stop" class="red">⏹ End Call</button>
   <div id="log"></div>
   <input id="type" placeholder="Type here and press Enter — e.g. Hunza price / ہنزہ کی قیمت / tusi daso qeemat">
-  <div class="note">Voice: natural Google voice for Urdu, Hindi, Punjabi and English; Sindhi/Pashto replies come in their own language and use the best voice on your device (Google has no free Sindhi/Pashto voice). Leads saved in this browser (nt_leads). Owner: 0328 6770527. Saraiki/Balochi talk is understood and answered in Urdu (no free natural voice exists for them yet).</div>
+  <div class="note">Voice style: "Pakistani Man" = Arslan ki mardana awaz (device voice, gehri pitch). "Natural" = Google voice for Urdu, Hindi, Punjabi and English; Sindhi/Pashto replies come in their own language and use the best voice on your device (Google has no free Sindhi/Pashto voice). Leads saved in this browser (nt_leads). Owner: 0328 6770527. Saraiki/Balochi talk is understood and answered in Urdu (no free natural voice exists for them yet).</div>
 </div>
 <script src="brain.js"></script>
 <script>
 const state = { pendingLead: null, lang: null };
 let forcedLang = null;
+let voiceStyle = 'man';
 const logEl = document.getElementById('log');
 const modeEl = document.getElementById('mode');
 function log(who, text){ const d=document.createElement('div'); d.className = who==='You'?'me':'ag'; d.textContent = who+': '+text; logEl.appendChild(d); logEl.scrollTop = 1e6; }
@@ -45,8 +47,8 @@ let audioQueue = [], playing = false;
 function chunkText(t){ const parts = []; let cur = ''; for (const w of t.split(' ')) { if ((cur + ' ' + w).length > 170) { parts.push(cur); cur = w; } else cur = cur ? cur + ' ' + w : w; } if (cur) parts.push(cur); return parts; }
 function playNext(){ if (!audioQueue.length) { playing = false; return; } playing = true; const a = audioQueue.shift(); a.onended = playNext; a.onerror = playNext; a.play().catch(playNext); }
 function speakGoogle(text, lang){ const tl = TTS_TL[lang] || 'en'; audioQueue = chunkText(text).map(c => new Audio('https://translate.googleapis.com/translate_tts?ie=UTF-8&client=tw-ob&tl=' + tl + '&q=' + encodeURIComponent(c))); playNext(); }
-function speakDevice(text, lang){ try{ const u = new SpeechSynthesisUtterance(text); const code = LANG_CODES[lang] || 'en-US'; u.lang = code; const vs = speechSynthesis.getVoices(); const v = vs.find(v => v.lang && v.lang.toLowerCase().startsWith(code.slice(0,2))) || vs.find(v => v.lang && v.lang.toLowerCase().startsWith('en')); if (v) u.voice = v; u.rate = 1.0; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
-function speak(text, lang){ log('Agent', text); if (['ur','hi','pa','en'].includes(lang)) { try { speakGoogle(text, lang); return; } catch(e){} } speakDevice(text, lang); }
+function speakDevice(text, lang, man){ try{ const u = new SpeechSynthesisUtterance(text); const code = LANG_CODES[lang] || 'en-US'; u.lang = code; const vs = speechSynthesis.getVoices(); const same = vs.filter(v => v.lang && v.lang.toLowerCase().startsWith(code.slice(0,2))); const MALE = ['asad','david','daniel','christopher','madhur','james','mark','george','ravi','hemant','ahmed','salman','usman','bilal']; const male = same.find(v => MALE.some(m => (v.name||'').toLowerCase().includes(m))) || vs.find(v => MALE.some(m => (v.name||'').toLowerCase().includes(m))); const v = (man && male) ? male : (same[0] || vs.find(v => v.lang && v.lang.toLowerCase().startsWith('en'))); if (v) u.voice = v; if (man) { u.pitch = 0.8; u.rate = 0.97; } speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function speak(text, lang){ log('Agent', text); if (voiceStyle === 'man') { speakDevice(text, lang, true); return; } if (['ur','hi','pa','en'].includes(lang)) { try { speakGoogle(text, lang); return; } catch(e){} } speakDevice(text, lang, false); }
 if ('speechSynthesis' in window) speechSynthesis.getVoices();
 const chipWrap = document.getElementById('chips');
 [['', 'Auto'], ['en', 'English'], ['ur', 'اردو'], ['roman', 'Roman'], ['hi', 'हिन्दी'], ['pa', 'ਪੰਜਾਬੀ'], ['sd', 'سنڌي'], ['ps', 'پښتو']].forEach(([code, label]) => {
@@ -76,6 +78,12 @@ document.getElementById('mic').onclick = () => {
   r.onerror = () => alert('Mic error — check permission, or type instead.');
   r.start();
 };
+const vWrap = document.getElementById('vchips');
+[['man', '🎙 Pakistani Man'], ['natural', '🎙 Natural']].forEach(([code, label]) => {
+  const b = document.createElement('button'); b.className = 'chip' + (code === 'man' ? ' on' : ''); b.textContent = label;
+  b.onclick = () => { voiceStyle = code; vWrap.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b)); log('Agent', code === 'man' ? 'Voice: Pakistani man (Arslan).' : 'Voice: Natural.'); };
+  vWrap.appendChild(b);
+});
 log('Agent','Ready. Talk in any language — mein usi language mein jawab dunga. Press “Answer Incoming Call”, then Talk or type.');
 setMode('en');
 </script>
